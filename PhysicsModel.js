@@ -1,7 +1,7 @@
 class PhysicsModel {
     constructor(xEdge, yEdge) {
         this.gravity = 10;
-        this.simulationRate = .001;
+        this.simulationRate = .005;
         this.bounceFactor = 0.9;
         this.xEdge = xEdge;
         this.yEdge = yEdge;

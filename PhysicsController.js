@@ -38,22 +38,29 @@ function reset() {
     initializeObjects();
 }
 
+function bindSlider(sliderId, labelId, object, field) {
+    var slider = document.getElementById(sliderId);
+    var label = document.getElementById(labelId);
+
+    slider.valueAsNumber = object[field];
+    label.textContent = object[field];
+
+    slider.addEventListener("input", (e) => {
+        object[field] = e.target.valueAsNumber;
+        label.textContent = object[field];
+    });
+}
+
 var canvas = document.getElementById("myCanvas");
-var model = new PhysicsModel(500, 500);
+var model = new PhysicsModel(canvas.width, canvas.height);
 var view = new PhysicsView(model, canvas);
 var objectCount = 20;
+var requestId = undefined;
 
-var gravitySlider = document.getElementById("slider-gravity");
-var gravityDisplay = document.getElementById("gravity");
-
-var requestId;
-
-gravitySlider.valueAsNumber = model.gravity;
-gravityDisplay.textContent = model.gravity;
-gravitySlider.addEventListener("input", (e) => {
-    model.gravity = e.target.valueAsNumber;
-    gravityDisplay.textContent = model.gravity;
-});
+bindSlider("slider-gravity", "gravity", model, "gravity");
+bindSlider("slider-simrate", "simrate", model, "simulationRate");
+bindSlider("slider-bounce", "bounce", model, "bounceFactor");
+bindSlider("slider-object-count", "object-count", this, "objectCount");
 
 document.getElementById("btn-start").addEventListener("click", start)
 document.getElementById("btn-pause").addEventListener("click", pause)
