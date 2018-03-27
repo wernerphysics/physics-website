@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Kinematics Animation Test</title>
+    <link href="physics.css" type="text/css" rel="stylesheet" />
+  </head>
+   
+  <body>
+    <h1>Kinematics Animation Test</h1>
+    <table><tr>
+      <td rowspan=2><canvas id="myCanvas" width="500" height="500"></canvas></td>
+      <td><table id="controls">
+        <tr>
+          <td><input type=range id="slider-gravity" min=0 max=100></input></td>
+          <td>Gravity: <span id="gravity"></span></td>
+        </tr>
+        <tr>
+          <td><input type=range id="slider-object-count" min=1 max=100></input></td>
+          <td>Object Count: <span id="object-count"></span></td>
+        </tr>
+        <tr>
+          <td><input type=range id="slider-simrate" min=1 max=100></input></td>
+          <td>Simulation Rate: <span id="simrate"></span></td>
+        </tr>
+        <tr>
+          <td><input type=range id="slider-bounce" min=1 max=100></input></td>
+          <td>Bounce Factor: <span id="bounce"></span></td>
+        </tr>
+        <tr>
+          <td colspan=2><button id="btn-start">Start</button></td>
+        </tr>
+        <tr>
+          <td><button id="btn-pause">Pause</button></td>
+          <td><button id="btn-reset">Reset</button></td>
+        </tr>
+      </table></td>
+    </tr>
+    <tr><td></td></tr></table>
+    <script src=PhysicsModel.js></script>
+    <script src=PhysicsView.js></script>
+    <script src=PhysicsController.js></script>
+  </body>
+</html>
