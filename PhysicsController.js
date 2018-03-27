@@ -1,4 +1,20 @@
-function initializeObjects() {
+var canvas = document.getElementById("myCanvas");
+var model = new PhysicsModel(canvas.width, canvas.height);
+var view = new PhysicsView(model, canvas);
+var objectCount = 20;
+var requestId = undefined;
+
+bindSlider("slider-gravity", "gravity", model, "gravity");
+bindSlider("slider-simrate", "simrate", model, "simulationRate");
+bindSlider("slider-bounce", "bounce", model, "bounceFactor");
+bindSlider("slider-object-count", "object-count", this, "objectCount");
+
+document.getElementById("btn-start").addEventListener("click", start);
+document.getElementById("btn-pause").addEventListener("click", pause);
+document.getElementById("btn-resume").addEventListener("click", animate);
+document.getElementById("btn-reset").addEventListener("click", reset);
+
+function createPhysicsObjects() {
     for(let i = 0; i < objectCount; i++) {
         let xPos = 100 + Math.floor(Math.random() * 300);
         let yPos = 100 + Math.floor(Math.random() * 300);
@@ -10,7 +26,9 @@ function initializeObjects() {
 }
 
 function start() {
-    initializeObjects();
+    model = new PhysicsModel(canvas.width, canvas.height);
+    view = new PhysicsView(model, canvas);
+    createPhysicsObjects();
     requestId = window.requestAnimationFrame(animate);
 }
 
@@ -33,9 +51,6 @@ function reset() {
         requestId = undefined;
     }
     view.clear();
-    model = new PhysicsModel(500, 500);
-    view = new PhysicsView(model, canvas);
-    initializeObjects();
 }
 
 function bindSlider(sliderId, labelId, object, field) {
@@ -50,19 +65,4 @@ function bindSlider(sliderId, labelId, object, field) {
         label.textContent = object[field];
     });
 }
-
-var canvas = document.getElementById("myCanvas");
-var model = new PhysicsModel(canvas.width, canvas.height);
-var view = new PhysicsView(model, canvas);
-var objectCount = 20;
-var requestId = undefined;
-
-bindSlider("slider-gravity", "gravity", model, "gravity");
-bindSlider("slider-simrate", "simrate", model, "simulationRate");
-bindSlider("slider-bounce", "bounce", model, "bounceFactor");
-bindSlider("slider-object-count", "object-count", this, "objectCount");
-
-document.getElementById("btn-start").addEventListener("click", start)
-document.getElementById("btn-pause").addEventListener("click", pause)
-document.getElementById("btn-reset").addEventListener("click", reset)
 
