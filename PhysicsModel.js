@@ -47,12 +47,15 @@ class PhysicsObject {
         this.yVel += model.gravity;
         this.xPos += model.simulationRate * this.xVel;
         this.yPos += model.simulationRate * this.yVel;
+        this.applyWallCollision(model);
+    }
 
+    applyWallCollision(model) {
         if(this.xPos <= this.radius || this.xPos >= (model.xEdge - this.radius)) {
             this.xVel *= -1 * model.bounceFactor;
         } if(this.yPos <= this.radius || this.yPos >= (model.yEdge - this.radius)) {
             this.yVel *= -1 * model.bounceFactor;
         }
     }
-} 
+}
 
