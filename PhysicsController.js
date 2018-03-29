@@ -8,7 +8,6 @@ bindSlider("slider-world-gravity", "world-gravity", model, "worldGravity");
 bindSlider("slider-rel-gravity", "rel-gravity", model, "relativeGravity");
 bindSlider("slider-simrate", "simrate", model, "simulationRate");
 bindSlider("slider-bounce", "bounce", model, "bounceFactor");
-bindSlider("slider-object-count", "object-count", window, "objectCount");
 
 document.getElementById("btn-start").addEventListener("click", start);
 document.getElementById("btn-pause").addEventListener("click", pause);

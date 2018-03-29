@@ -1,8 +1,8 @@
 class PhysicsModel {
     constructor(width, height) {
         this.worldGravity = 0;
-        this.relativeGravity = 60;
-        this.simulationRate = .05;
+        this.relativeGravity = 10;
+        this.simulationRate = .02;
         this.bounceFactor = 0.9;
         this.xEdge = width / 2;
         this.yEdge = height / 2;
@@ -19,8 +19,11 @@ class PhysicsModel {
     }
 
     generateSimpleOrbit() {
-        model.addObject(100, 0, 0, 0, 0);
-        model.addObject(10, 0, 150, 30, 0);
+        model.addObject(4000, 0, 0, 0, 0);
+        model.addObject(40, 0, 100, 150, 0);
+        model.addObject(40, 0, -100, -150, 0);
+        model.addObject(40, 200, 0, 0, 100);
+        model.addObject(40, -200, 0, 0, -100);
     }
 
     generateRandomObjects(objectCount) {
@@ -49,7 +52,7 @@ class PhysicsObject {
     constructor(model, mass, xPos, yPos, xVel, yVel) {
         this.model = model;
         this.mass = mass;
-        this.radius = mass;
+        this.radius = Math.sqrt(mass);
         this.xPos = xPos;
         this.yPos = yPos;
         this.xVel = xVel;
