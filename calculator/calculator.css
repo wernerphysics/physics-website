@@ -1,0 +1,21 @@
+body {
+    font-family: "Courier New", monospace;
+} table {
+    height: 400px;
+    width: 400px;
+} td {
+    text-align: center;
+    font-size: 200%;
+    cursor: default;
+} #display {
+    text-align: right;
+    background-color: #eeeeee;
+} .number {
+    background-color: #bbbbbb;
+} .operator {
+    background-color: #dddddd;
+} #btn-equals {
+    background-color: #33aaee;
+} #btn-clear {
+    background-color: #ff5555;
+}

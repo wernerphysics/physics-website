@@ -1,0 +1,16 @@
+body {
+    font-family: Helvetica;
+    text-align: center;
+    max-width: 800px;
+} table {
+    border: 4px ridge;
+    margin-left: auto;
+    margin-right: auto;
+} td {
+    padding: 10px;
+} img {
+    max-width: 400px;
+} #demos {
+    margin-top: 10px;
+}
+
