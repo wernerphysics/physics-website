@@ -9,7 +9,8 @@ class PhysicsModel {
     }
 
     addObject(radius, xPos, yPos, xVel, yVel) {
-        this.physicsObjects.push(new PhysicsObject(radius, xPos, yPos, xVel, yVel));
+        let p = new PhysicsObject(this, radius, xPos, yPos, xVel, yVel);
+        this.physicsObjects.push(p);
     }
 
     clearObjects() {
@@ -35,7 +36,8 @@ class PhysicsModel {
 }
 
 class PhysicsObject {
-    constructor(radius, xPos, yPos, xVel, yVel) {
+    constructor(model, radius, xPos, yPos, xVel, yVel) {
+        this.model = model;
         this.radius = radius;
         this.xPos = xPos;
         this.yPos = yPos;
@@ -43,14 +45,18 @@ class PhysicsObject {
         this.yVel = yVel;
     }
 
-    update(model) {
-        this.yVel += model.gravity;
+    update() {
+        this.applyUniversalGravity();
+        this.applyWallCollision();
         this.xPos += model.simulationRate * this.xVel;
         this.yPos += model.simulationRate * this.yVel;
-        this.applyWallCollision(model);
     }
 
-    applyWallCollision(model) {
+    applyUniversalGravity() {
+        this.yVel += model.gravity;
+    }
+
+    applyWallCollision() {
         if(this.xPos <= this.radius || this.xPos >= (model.xEdge - this.radius)) {
             this.xVel *= -1 * model.bounceFactor;
         } if(this.yPos <= this.radius || this.yPos >= (model.yEdge - this.radius)) {
