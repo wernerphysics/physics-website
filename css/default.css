@@ -1,8 +1,9 @@
 body {
     font-family: Helvetica;
     text-align: center;
-    max-width: 800px;
     background-color: #fdf6e3;
+    margin-left: auto;
+    margin-right: auto;
 } table {
     border: 4px ridge black;
     margin-left: auto;
@@ -15,4 +16,5 @@ body {
     max-width: 400px;
     margin-top: 10px;
 }
+******************************************************************************************
 
