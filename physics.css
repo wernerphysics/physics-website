@@ -1,0 +1,17 @@
+body {
+    font-family: monospace;
+} h1 {
+    text-align: left;
+} button {
+    width: 100%;
+    text-align: center;
+} .label {
+    text-align: right;
+} #myCanvas {
+    height: 500px;
+    width: 500px;
+    border: 1px solid #CCC ;
+} #controls {
+    background-color: #dddddd;
+    border: 2px solid #666666;
+}
