@@ -1,6 +1,7 @@
 class PhysicsModel {
     constructor(xEdge, yEdge) {
-        this.gravity = 10;
+        this.worldGravity = 10;
+        this.relativeGravity = 0;
         this.simulationRate = .005;
         this.bounceFactor = 0.9;
         this.xEdge = xEdge;
@@ -46,14 +47,19 @@ class PhysicsObject {
     }
 
     update() {
-        this.applyUniversalGravity();
+        this.applyWorldGravity();
+        this.applyRelativeGravity();
         this.applyWallCollision();
         this.xPos += model.simulationRate * this.xVel;
         this.yPos += model.simulationRate * this.yVel;
     }
 
-    applyUniversalGravity() {
-        this.yVel += model.gravity;
+    applyWorldGravity() {
+        this.yVel += model.worldGravity;
+    }
+
+    applyRelativeGravity() {
+       return undefined;
     }
 
     applyWallCollision() {
