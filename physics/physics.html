@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Kinematics Animation Test</title>
+    <link href="physics.css" type="text/css" rel="stylesheet" />
+  </head>
+   
+  <body>
+    <h1>Kinematics Animation Test</h1>
+    <table><tr>
+      <td rowspan=2><canvas id="myCanvas" width="500" height="500"></canvas></td>
+      <td><table id="controls">
+        <tr>
+          <td><input type=range id="slider-world-gravity" min=0 max=50></input></td>
+          <td>World Gravity: <span id="world-gravity"></span></td>
+        </tr>
+        <tr>
+          <td><input type=range id="slider-rel-gravity" min=0 max=50></input></td>
+          <td>Relative Gravity: <span id="rel-gravity"></span></td>
+        </tr>
+        <tr>
+          <td><input type=range id="slider-simrate" min=.01 max=.05 step=.005></input></td>
+          <td>Simulation Rate: <span id="simrate"></span></td>
+        </tr>
+        <tr>
+          <td><input type=range id="slider-bounce" min=0 max=1 step=0.1></input></td>
+          <td>Bounce Factor: <span id="bounce"></span></td>
+        </tr>
+        <tr>
+          <td colspan=3><button id="btn-start">Start</button></td>
+        </tr>
+        <tr>
+          <td><button id="btn-pause">Pause</button></td>
+          <td><button id="btn-resume">Resume</button></td>
+          <td><button id="btn-reset">Reset</button></td>
+        </tr>
+      </table></td>
+    </tr>
+    <tr><td></td></tr></table>
+    <script src=PhysicsModel.js></script>
+    <script src=PhysicsView.js></script>
+    <script src=PhysicsController.js></script>
+  </body>
+</html>
