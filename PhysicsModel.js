@@ -1,16 +1,16 @@
 class PhysicsModel {
-    constructor(xEdge, yEdge) {
-        this.worldGravity = 10;
-        this.relativeGravity = 0;
-        this.simulationRate = .005;
+    constructor(width, height) {
+        this.worldGravity = 0;
+        this.relativeGravity = 60;
+        this.simulationRate = .05;
         this.bounceFactor = 0.9;
-        this.xEdge = xEdge;
-        this.yEdge = yEdge;
+        this.xEdge = width / 2;
+        this.yEdge = height / 2;
         this.physicsObjects = [];
     }
 
-    addObject(radius, xPos, yPos, xVel, yVel) {
-        let p = new PhysicsObject(this, radius, xPos, yPos, xVel, yVel);
+    addObject(mass, xPos, yPos, xVel, yVel) {
+        let p = new PhysicsObject(this, mass, xPos, yPos, xVel, yVel);
         this.physicsObjects.push(p);
     }
 
@@ -18,14 +18,23 @@ class PhysicsModel {
         this.physicsObjects = [];
     }
 
+    generateSimpleOrbit() {
+        model.addObject(100, 0, 0, 0, 0);
+        model.addObject(10, 0, 150, 30, 0);
+    }
+
     generateRandomObjects(objectCount) {
+        let maxPos = 200;
+        let maxVel = 100;
         for(let i = 0; i < objectCount; i++) {
-            let xPos = 100 + Math.floor(Math.random() * 300);
-            let yPos = 100 + Math.floor(Math.random() * 300);
-            let xVel = (Math.random() < 0.5 ? -1 : 1) * Math.floor(Math.random() * 1000);
-            let yVel = (Math.random() < 0.5 ? -1 : 1) * Math.floor(Math.random() * 1000);
-            let radius = 10 + Math.floor(Math.random() * 40);
-            model.addObject(radius, xPos, yPos, xVel, yVel);
+            let xPos = 100 + Math.floor(Math.random() * maxPos);
+            let yPos = 100 + Math.floor(Math.random() * maxPos);
+            let xSign = (Math.random() < 0.5 ? -1 : 1)
+            let ySign = (Math.random() < 0.5 ? -1 : 1)
+            let xVel = xSign * Math.floor(Math.random() * maxVel);
+            let yVel = ySign * Math.floor(Math.random() * maxVel);
+            let mass = 10 + Math.floor(Math.random() * 40);
+            model.addObject(mass, xPos, yPos, xVel, yVel);
         }
     }
 
@@ -37,9 +46,10 @@ class PhysicsModel {
 }
 
 class PhysicsObject {
-    constructor(model, radius, xPos, yPos, xVel, yVel) {
+    constructor(model, mass, xPos, yPos, xVel, yVel) {
         this.model = model;
-        this.radius = radius;
+        this.mass = mass;
+        this.radius = mass;
         this.xPos = xPos;
         this.yPos = yPos;
         this.xVel = xVel;
@@ -50,23 +60,40 @@ class PhysicsObject {
         this.applyWorldGravity();
         this.applyRelativeGravity();
         this.applyWallCollision();
-        this.xPos += model.simulationRate * this.xVel;
-        this.yPos += model.simulationRate * this.yVel;
+        this.xPos += this.model.simulationRate * this.xVel;
+        this.yPos += this.model.simulationRate * this.yVel;
+    }
+
+    applyForce(magnitude, heading) {
+        let acceleration = magnitude / this.mass;
+        this.xVel += acceleration * Math.cos(heading);
+        this.yVel += acceleration * Math.sin(heading);
     }
 
     applyWorldGravity() {
-        this.yVel += model.worldGravity;
+        this.yVel -= this.model.worldGravity;
     }
 
     applyRelativeGravity() {
-       return undefined;
+       this.model.physicsObjects.forEach((other) => {
+           if(this != other) {
+               let xDistance = other.xPos - this.xPos;
+               let yDistance = other.yPos - this.yPos;
+               let distanceSquare = Math.pow(xDistance, 2) + Math.pow(yDistance, 2);
+               let magnitude = this.model.relativeGravity * (this.mass * other.mass) / distanceSquare;
+               let heading = Math.atan2(yDistance, xDistance);
+               this.applyForce(magnitude, heading);
+           }
+       });
     }
 
     applyWallCollision() {
-        if(this.xPos <= this.radius || this.xPos >= (model.xEdge - this.radius)) {
-            this.xVel *= -1 * model.bounceFactor;
-        } if(this.yPos <= this.radius || this.yPos >= (model.yEdge - this.radius)) {
-            this.yVel *= -1 * model.bounceFactor;
+        if(this.xPos <= (this.radius - this.model.xEdge)
+           || this.xPos >= (this.model.xEdge - this.radius)) {
+            this.xVel *= -1 * this.model.bounceFactor;
+        } if(this.yPos <= (this.radius - this.model.yEdge)
+             || this.yPos >= (this.model.yEdge - this.radius)) {
+            this.yVel *= -1 * this.model.bounceFactor;
         }
     }
 }

@@ -1,7 +1,7 @@
 var canvas = document.getElementById("myCanvas");
 var model = new PhysicsModel(canvas.width, canvas.height);
 var view = new PhysicsView(model, canvas);
-var objectCount = 20;
+var objectCount = 5;
 var requestId = undefined;
 
 bindSlider("slider-world-gravity", "world-gravity", model, "worldGravity");
@@ -17,7 +17,7 @@ document.getElementById("btn-reset").addEventListener("click", reset);
 
 function start() {
     model.clearObjects();
-    model.generateRandomObjects(objectCount);
+    model.generateSimpleOrbit();
     requestId = window.requestAnimationFrame(animate);
 }
 
