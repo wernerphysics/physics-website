@@ -14,18 +14,6 @@ class PhysicsModel {
         this.physicsObjects.push(p);
     }
 
-    clearObjects() {
-        this.physicsObjects = [];
-    }
-
-    generateSimpleOrbit() {
-        model.addObject(4000, 0, 0, 0, 0);
-        model.addObject(40, 0, 100, 150, 0);
-        model.addObject(40, 0, -100, -150, 0);
-        model.addObject(40, 200, 0, 0, 100);
-        model.addObject(40, -200, 0, 0, -100);
-    }
-
     generateRandomObjects(objectCount) {
         let maxPos = 200;
         let maxVel = 100;

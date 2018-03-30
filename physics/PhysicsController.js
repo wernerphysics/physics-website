@@ -1,56 +1,49 @@
-var canvas = document.getElementById("myCanvas");
-var model = new PhysicsModel(canvas.width, canvas.height);
-var view = new PhysicsView(model, canvas);
-var objectCount = 5;
-var requestId = undefined;
-
-bindSlider("slider-world-gravity", "world-gravity", model, "worldGravity");
-bindSlider("slider-rel-gravity", "rel-gravity", model, "relativeGravity");
-bindSlider("slider-simrate", "simrate", model, "simulationRate");
-bindSlider("slider-bounce", "bounce", model, "bounceFactor");
-
-document.getElementById("btn-start").addEventListener("click", start);
-document.getElementById("btn-pause").addEventListener("click", pause);
-document.getElementById("btn-resume").addEventListener("click", animate);
-document.getElementById("btn-reset").addEventListener("click", reset);
-
-function start() {
-    model.clearObjects();
-    model.generateSimpleOrbit();
-    requestId = window.requestAnimationFrame(animate);
-}
-
-function pause() {
-    if(requestId) {
-        window.cancelAnimationFrame(requestId);
-        requestId = undefined;
+class PhysicsController {
+    constructor(model, view) {
+        this.model = model;
+        this.view = view;
+        this.requestId = undefined;
+        this.animate = this.animate.bind(this);
+        this.pause = this.pause.bind(this);
+        this.reset = this.reset.bind(this);
     }
-}
 
-function animate() {
-    model.update();
-    view.draw();
-    requestId = window.requestAnimationFrame(animate);
-}
-
-function reset() {
-    if(requestId) {
-        window.cancelAnimationFrame(requestId);
-        requestId = undefined;
+    animate() {
+        this.model.update();
+        this.view.draw();
+        this.requestId = window.requestAnimationFrame(this.animate);
     }
-    view.clear();
-}
 
-function bindSlider(sliderId, labelId, object, field) {
-    var slider = document.getElementById(sliderId);
-    var label = document.getElementById(labelId);
+    pause() {
+        if(this.requestId) {
+            window.cancelAnimationFrame(this.requestId);
+            this.requestId = undefined;
+        }
+    }
 
-    slider.valueAsNumber = object[field];
-    label.textContent = object[field];
+    reset() {
+        this.view.clear();
+        if(this.requestId) {
+            window.cancelAnimationFrame(this.requestId);
+            this.requestId = undefined;
+        }
+    }
 
-    slider.addEventListener("input", (e) => {
-        object[field] = e.target.valueAsNumber;
-        label.textContent = object[field];
-    });
+    bindButton(buttonId, functionId) {
+        document.getElementById(buttonId).addEventListener("click", this[functionId]);
+    }
+
+    bindSlider(sliderId, labelId, param) {
+        let slider = document.getElementById(sliderId);
+        let label = document.getElementById(labelId);
+
+        slider.valueAsNumber = this.model[param];
+        label.textContent = this.model[param];
+
+        slider.addEventListener("input", (e) => {
+            this.model[param] = e.target.valueAsNumber;
+            label.textContent = this.model[param];
+        });
+    }
 }
 
