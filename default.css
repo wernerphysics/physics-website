@@ -1,22 +1,26 @@
 body {
-    font-family: Helvetica;
+    font-family: sans-serif;
     text-align: center;
     background-color: #fdf6e3;
     margin-left: auto;
     margin-right: auto;
+    max-width: 640px;
+} p {
+    text-indent: 0.5in;
+    text-align: justify;
 } table {
-    border: 4px ridge black;
+    border: 4px solid #93a1a1;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 10px;
 } td {
-    padding: 10px;
+    padding: 8px;
 } td.active-page {
     background-color: #93a1a1;
 } img {
     max-width: 100%;
-    vertical-align: text-bottom;
-} #demos {
-    max-width: 400px;
-    margin-top: 10px;
+    vertical-align: top;
+} div.footer {
+    padding: 10px;
 }
 
