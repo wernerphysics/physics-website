@@ -14,6 +14,10 @@ class PhysicsModel {
         this.physicsObjects.push(p);
     }
 
+    clearObjects() {
+        this.physicsObjects = [];
+    }
+
     generateRandomObjects(objectCount) {
         let maxPos = 200;
         let maxVel = 100;

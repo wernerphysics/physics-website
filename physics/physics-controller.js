@@ -30,7 +30,7 @@ class PhysicsController {
     }
 
     bindButton(buttonId, functionId) {
-        document.getElementById(buttonId).addEventListener("click", this[functionId]);
+        document.getElementById(buttonId).addEventListener("click", functionId);
     }
 
     bindSlider(sliderId, labelId, param) {
