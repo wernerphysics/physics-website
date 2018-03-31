@@ -1,5 +1,17 @@
 var canvas = document.getElementById("myCanvas");
-var model = new PhysicsModel(canvas.width, canvas.height);
+
+physicsParams = {
+    worldGravity: 0,
+    relativeGravity: 10,
+    simulationRate: 0.02,
+    bounceFactor: 0.9,
+    edgeCollision: false,
+    objectCollision: true,
+    width: canvas.width,
+    height: canvas.height
+};
+
+var model = new PhysicsModel(physicsParams);
 var view = new PhysicsView(model, canvas);
 var controller = new PhysicsController(model, view);
 
