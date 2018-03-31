@@ -1,31 +1,29 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Orbital Mechanics Simulation</title>
+    <title>Kinematics Simulation</title>
     <link href="physics.css" type="text/css" rel="stylesheet" />
   </head>
    
   <body>
-    <h1>Orbital Mechanics Simulation</h1>
+    <h1>Kinematics Simulation</h1>
     <table><tr>
-      <td rowspan=2>
-        <canvas id="main-canvas"
-                width="500"
-                height="500"
-                style="background-color: black">
-        </canvas></td>
+      <td rowspan=2><canvas id="main-canvas" width="500" height="500"></canvas></td>
       <td><table id="controls">
         <tr>
-          <td><input type=range id="slider-rel-gravity" min=0 max=50></input></td>
-          <td colspan=2>Relative Gravity: <span id="rel-gravity"></span></td>
+          <td class="label">World Gravity: </td>
+          <td><span id="gravity"></span></td>
+          <td><input type=range id="slider-gravity" min=0 max=50></input></td>
         </tr>
         <tr>
+          <td class="label">Simulation Rate: </td>
+          <td><span id="simrate"></span></td>
           <td><input type=range id="slider-simrate" min=.01 max=.05 step=.005></input></td>
-          <td colspan=2>Simulation Rate: <span id="simrate"></span></td>
         </tr>
         <tr>
+          <td class="label">Bounce Factor: </td>
+          <td><span id="bounce"></span></td>
           <td><input type=range id="slider-bounce" min=0 max=1 step=0.1></input></td>
-          <td colspan=2>Bounce Factor: <span id="bounce"></span></td>
         </tr>
         <tr>
           <td><button id="btn-start">Start</button></td>
@@ -38,6 +36,6 @@
     <script src=physics-model.js></script>
     <script src=physics-view.js></script>
     <script src=physics-controller.js></script>
-    <script src=orbital-mechanics.js></script>
+    <script src=kinematics.js></script>
   </body>
 </html>

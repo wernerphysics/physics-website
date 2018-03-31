@@ -1,4 +1,4 @@
-var canvas = document.getElementById("myCanvas");
+var canvas = document.getElementById("main-canvas");
 
 physicsParams = {
     worldGravity: 0,

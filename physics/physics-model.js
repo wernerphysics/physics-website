@@ -20,21 +20,6 @@ class PhysicsModel {
         this.physicsObjects = [];
     }
 
-    generateRandomObjects(objectCount) {
-        let maxPos = 200;
-        let maxVel = 100;
-        for(let i = 0; i < objectCount; i++) {
-            let xPos = 100 + Math.floor(Math.random() * maxPos);
-            let yPos = 100 + Math.floor(Math.random() * maxPos);
-            let xSign = (Math.random() < 0.5 ? -1 : 1)
-            let ySign = (Math.random() < 0.5 ? -1 : 1)
-            let xVel = xSign * Math.floor(Math.random() * maxVel);
-            let yVel = ySign * Math.floor(Math.random() * maxVel);
-            let mass = 10 + Math.floor(Math.random() * 40);
-            model.addObject(mass, xPos, yPos, xVel, yVel);
-        }
-    }
-
     update() {
         this.physicsObjects.forEach((item) => {
             item.update(this);

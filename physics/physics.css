@@ -7,11 +7,10 @@ body {
     text-align: center;
 } .label {
     text-align: right;
-} #myCanvas {
+} canvas {
     height: 500px;
     width: 500px;
     border: 1px solid #CCC ;
-    background-color: #000000;
 } #controls {
     background-color: #dddddd;
     border: 2px solid #666666;
