@@ -21,5 +21,24 @@ class PhysicsView {
             this.context.fill();
         });
     }
+
+    drawCircle(canvasX, canvasY) {
+        this.context.beginPath();
+        this.context.arc(canvasX, canvasY, 10, 0, 2*Math.PI, false);
+        this.context.closePath();
+        this.context.fillStyle = "blue";
+        this.context.fill();
+    }
+
+    drawArrow(startX, startY, endX, endY) {
+        this.context.lineWidth = 3;
+        this.context.strokeStyle = "blue";
+
+        this.context.beginPath();
+        this.context.moveTo(startX, startY);
+        this.context.lineTo(endX, endY);
+        this.context.closePath();
+        this.context.stroke();
+    }
 }
 

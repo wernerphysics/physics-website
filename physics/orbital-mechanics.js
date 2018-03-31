@@ -1,5 +1,3 @@
-var canvas = document.getElementById("main-canvas");
-
 physicsParams = {
     worldGravity: 0,
     relativeGravity: 10,
@@ -7,26 +5,27 @@ physicsParams = {
     bounceFactor: 0.9,
     edgeCollision: false,
     objectCollision: true,
-    width: canvas.width,
-    height: canvas.height
 };
 
-var model = new PhysicsModel(physicsParams);
+var canvas = document.getElementById("main-canvas");
+var model = new PhysicsModel(physicsParams, canvas);
 var view = new PhysicsView(model, canvas);
-var controller = new PhysicsController(model, view);
+var controller = new PhysicsController(model, view, canvas);
 
 controller.bindButton("btn-start", controller.animate)
 controller.bindButton("btn-pause", controller.pause)
 controller.bindButton("btn-reset", controller.reset)
-controller.bindButton("btn-reset", initialize)
+controller.bindButton("btn-reset", initializeOrbits)
 
 controller.bindSlider("slider-rel-gravity", "rel-gravity", "relativeGravity");
 controller.bindSlider("slider-simrate", "simrate", "simulationRate");
 controller.bindSlider("slider-bounce", "bounce", "bounceFactor");
 
-initialize();
+controller.bindClick();
 
-function initialize() {
+initializeOrbits();
+
+function initializeOrbits() {
     model.clearObjects();
     model.addObject(4000, 0, 0, 0, 0);
     model.addObject(40, 0, 100, 150, 0);

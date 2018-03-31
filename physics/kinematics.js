@@ -1,5 +1,3 @@
-var canvas = document.getElementById("main-canvas");
-
 physicsParams = {
     worldGravity: 10,
     relativeGravity: 0,
@@ -7,41 +5,36 @@ physicsParams = {
     bounceFactor: 0.9,
     edgeCollision: true,
     objectCollision: false,
-    width: canvas.width,
-    height: canvas.height
 };
 
-var model = new PhysicsModel(physicsParams);
+var canvas = document.getElementById("main-canvas");
+var model = new PhysicsModel(physicsParams, canvas);
 var view = new PhysicsView(model, canvas);
-var controller = new PhysicsController(model, view);
+var controller = new PhysicsController(model, view, canvas);
 var initialObjectCount = 10;
 
 controller.bindButton("btn-start", controller.animate)
 controller.bindButton("btn-pause", controller.pause)
 controller.bindButton("btn-reset", controller.reset)
-controller.bindButton("btn-reset", initialize)
+controller.bindButton("btn-reset", generateRandomObjects)
 
 controller.bindSlider("slider-gravity", "gravity", "worldGravity");
 controller.bindSlider("slider-simrate", "simrate", "simulationRate");
 controller.bindSlider("slider-bounce", "bounce", "bounceFactor");
 
-canvas.addEventListener("click", (event) => {
-    xPos = event.offsetX - 250;
-    yPos = 250 - event.offsetY;
-    model.addObject(100, xPos, yPos, 0, 0);
-});
+controller.bindClick();
 
-initialize();
+generateRandomObjects();
 
-function initialize() {
+function generateRandomObjects() {
     model.clearObjects();
     for(let i = 0; i < initialObjectCount; i++) {
-        generateRandomObject();
+        randomObject();
     }
     view.draw();
 }
 
-function generateRandomObject() {
+function randomObject() {
     let posRange = 400;
     let velRange = 1000;
     let xPos = -200 + Math.floor(Math.random() * posRange);

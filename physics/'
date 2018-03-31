@@ -11,6 +11,11 @@ class PhysicsController {
         this.mouseDownListener = this.mouseDownListener.bind(this);
         this.mouseUpListener = this.mouseUpListener.bind(this);
         this.mouseMoveListener = this.mouseMoveListener.bind(this);
+
+        this.canvasX = undefined;
+        this.canvasY = undefined;
+        this.objectX = undefined;
+        this.objectY = undefined;
     }
 
     animate() {
@@ -51,29 +56,31 @@ class PhysicsController {
         });
     }
 
-    bindClick() {
-        this.canvas.addEventListener("mousedown", this.mouseDownListener);
-    }
-
     mouseDownListener(event) {
         this.pause();
         this.canvas.addEventListener("mouseup", this.mouseUpListener);
         this.canvas.addEventListener("mouseleave", this.mouseUpListener);
         this.canvas.addEventListener("mousemove", this.mouseMoveListener);
+        this.canvas.onMousemove = () => {;
+            view.draw()
+            view.drawCircle(event.offsetX, event.offsetY);
+        }
 
         this.canvasX = event.offsetX;
         this.canvasY = event.offsetY;
-        this.objectX = this.canvasX - 250;
-        this.objectY = 250 - this.canvasY;
+        this.objectX = canvasX - 250;
+        this.objectY = 250 - canvasY;
+
+        view.draw();
     }
 
     mouseUpListener(event) {
         this.canvas.removeEventListener("mousemove", this.mouseMoveListener);
         this.canvas.removeEventListener("mouseleave", this.mouseUpListener);
 
-        let xVel = 5 * (event.offsetX - this.canvasX);
-        let yVel = 5 * (this.canvasY - event.offsetY);
-        this.model.addObject(100, this.objectX, this.objectY, xVel, yVel);
+        let xVel = 10 * (event.offsetX - canvasX);
+        let yVel = 10 * (canvasY - event.offsetY);
+        model.addObject(100, this.objectX, this.objectY, xVel, yVel);
         this.animate();
     }
 

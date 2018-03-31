@@ -1,13 +1,13 @@
 class PhysicsModel {
-    constructor(params) {
+    constructor(params, canvas) {
         this.worldGravity = params.worldGravity;
         this.relativeGravity = params.relativeGravity;
         this.simulationRate = params.simulationRate;
         this.bounceFactor = params.bounceFactor;
         this.edgeCollision = params.edgeCollision;
         this.objectCollision = params.objectCollision;
-        this.xEdge = params.width / 2;
-        this.yEdge = params.height / 2;
+        this.xEdge = canvas.width / 2;
+        this.yEdge = canvas.height / 2;
         this.physicsObjects = [];
     }
 
