@@ -25,6 +25,12 @@ controller.bindSlider("slider-gravity", "gravity", "worldGravity");
 controller.bindSlider("slider-simrate", "simrate", "simulationRate");
 controller.bindSlider("slider-bounce", "bounce", "bounceFactor");
 
+canvas.addEventListener("click", (event) => {
+    xPos = event.offsetX - 250;
+    yPos = 250 - event.offsetY;
+    model.addObject(100, xPos, yPos, 0, 0);
+});
+
 initialize();
 
 function initialize() {
@@ -35,16 +41,13 @@ function initialize() {
     view.draw();
 }
 
-function generateRandomObject(objectCount) {
-    function randomSign() {
-        return Math.random() < 0.5 ? -1 : 1;
-    }
-    let maxPos = 200;
-    let maxVel = 500;
-    let xPos = randomSign() * Math.floor(Math.random() * maxPos);
-    let yPos = randomSign() * Math.floor(Math.random() * maxPos);
-    let xVel = randomSign() * Math.floor(Math.random() * maxVel);
-    let yVel = randomSign() * Math.floor(Math.random() * maxVel);
+function generateRandomObject() {
+    let posRange = 400;
+    let velRange = 1000;
+    let xPos = -200 + Math.floor(Math.random() * posRange);
+    let yPos = -200 + Math.floor(Math.random() * posRange);
+    let xVel = -500 + Math.floor(Math.random() * velRange);
+    let yVel = -500 + Math.floor(Math.random() * velRange);
     let mass = 10 + Math.floor(Math.random() * 1000);
     model.addObject(mass, xPos, yPos, xVel, yVel);
 }

@@ -16,16 +16,36 @@
         </canvas></td>
       <td><table id="controls">
         <tr>
-          <td><input type=range id="slider-rel-gravity" min=0 max=50></input></td>
-          <td colspan=2>Relative Gravity: <span id="rel-gravity"></span></td>
+          <td class="label">Relative Gravity: </td>
+          <td><span id="rel-gravity"></span></td>
+          <td><input type=range
+                     id="slider-rel-gravity"
+                     min=0
+                     max=50>
+              </input>
+          </td>
         </tr>
         <tr>
-          <td><input type=range id="slider-simrate" min=.01 max=.05 step=.005></input></td>
-          <td colspan=2>Simulation Rate: <span id="simrate"></span></td>
+          <td class="label">Simulation Rate: </td>
+          <td><span id="simrate"></span></td>
+          <td><input type=range
+                     id="slider-simrate"
+                     min=.01
+                     max=.05
+                     step=.005>
+              </input>
+          </td>
         </tr>
         <tr>
-          <td><input type=range id="slider-bounce" min=0 max=1 step=0.1></input></td>
-          <td colspan=2>Bounce Factor: <span id="bounce"></span></td>
+          <td class="label">Bounce Factor: </td>
+          <td><span id="bounce"></span></td>
+          <td><input type=range
+                     id="slider-bounce"
+                     min=0
+                     max=1
+                     step=0.1>
+              </input>
+          </td>
         </tr>
         <tr>
           <td><button id="btn-start">Start</button></td>
