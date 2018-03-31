@@ -60,6 +60,7 @@ class PhysicsController {
         this.canvas.addEventListener("mouseup", this.mouseUpListener);
         this.canvas.addEventListener("mouseleave", this.mouseUpListener);
         this.canvas.addEventListener("mousemove", this.mouseMoveListener);
+        this.canvas.addEventListener("touchmove", this.mouseMoveListener);
 
         this.canvasX = event.offsetX;
         this.canvasY = event.offsetY;
@@ -69,6 +70,7 @@ class PhysicsController {
 
     mouseUpListener(event) {
         this.canvas.removeEventListener("mousemove", this.mouseMoveListener);
+        this.canvas.removeEventListener("touchmove", this.mouseMoveListener);
         this.canvas.removeEventListener("mouseleave", this.mouseUpListener);
 
         let xVel = 5 * (event.offsetX - this.canvasX);
