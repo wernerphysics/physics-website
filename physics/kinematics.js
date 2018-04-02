@@ -1,10 +1,10 @@
 physicsParams = {
-    worldGravity: 10,
+    worldGravity: 0,
     relativeGravity: 0,
     simulationRate: 0.02,
-    bounceFactor: 0.9,
+    bounceFactor: 0.8,
     edgeCollision: true,
-    objectCollision: false,
+    objectCollision: true,
 };
 
 var canvas = document.getElementById("main-canvas");
@@ -13,10 +13,10 @@ var view = new PhysicsView(model, canvas);
 var controller = new PhysicsController(model, view, canvas);
 var initialObjectCount = 10;
 
-controller.bindButton("btn-start", controller.animate)
-controller.bindButton("btn-pause", controller.pause)
-controller.bindButton("btn-reset", controller.reset)
-controller.bindButton("btn-reset", generateRandomObjects)
+controller.bindButton("btn-start", controller.animate);
+controller.bindButton("btn-pause", controller.pause);
+controller.bindButton("btn-reset", controller.reset);
+controller.bindButton("btn-reset", generateRandomObjects);
 
 controller.bindSlider("slider-gravity", "gravity", "worldGravity");
 controller.bindSlider("slider-simrate", "simrate", "simulationRate");
@@ -25,6 +25,13 @@ controller.bindSlider("slider-bounce", "bounce", "bounceFactor");
 controller.bindClick();
 
 generateRandomObjects();
+
+function collisionTest() {
+    model.clearObjects();
+    model.addObject(1000, -100, 0, 100, 0)
+    model.addObject(100, 0, 0, 0, 0)
+    view.draw();
+}
 
 function generateRandomObjects() {
     model.clearObjects();
