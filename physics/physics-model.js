@@ -80,10 +80,15 @@ class PhysicsObject {
         return Math.atan2(yDistance, xDistance);
     }
    
-    applyDeltaV(magnitude, heading) {
-        let deltaV = Math.abs(magnitude);
+    applyImpulse(magnitude, heading) {
+        let deltaV = Math.abs(magnitude) / this.mass;
         this.xVel += deltaV * Math.cos(heading);
         this.yVel += deltaV * Math.sin(heading);
+    }
+
+    displace(distance, heading) {
+        this.xPos += distance * Math.cos(heading);
+        this.yPos += distance * Math.sin(heading);
     }
 
     applyWorldGravity() {
@@ -96,7 +101,7 @@ class PhysicsObject {
                let magnitude = this.model.relativeGravity
                              * (this.mass * other.mass)
                              / this.distanceSquare(other);
-               this.applyDeltaV(magnitude / this.mass, this.heading(other));
+               this.applyImpulse(magnitude, this.heading(other));
            }
        });
     }
@@ -104,27 +109,36 @@ class PhysicsObject {
     applyEdgeCollision() {
         let bounce = this.model.bounceFactor
         // Left edge
-        if(this.xPos <= this.radius - this.model.xEdge && this.xVel < 0) {
-            this.applyDeltaV(2 * bounce * this.xVel, 0);
+        if(this.xPos < this.radius - this.model.xEdge) {
+            this.xPos = this.radius - this.model.xEdge;
+            this.xVel *= -bounce;
         } // Right edge
-        else if(this.xPos >= this.model.xEdge - this.radius && this.xVel > 0) {
-            this.applyDeltaV(2 * bounce * this.xVel, Math.PI);
+        else if(this.xPos > this.model.xEdge - this.radius) {
+            this.xPos = this.model.xEdge - this.radius;
+            this.xVel *= -bounce;
         } // Bottom edge
-        else if(this.yPos <= this.radius - this.model.yEdge && this.yVel < 0) {
-            this.applyDeltaV(2 * bounce * this.yVel, Math.PI/2);
+        else if(this.yPos < this.radius - this.model.yEdge) {
+            this.yPos = this.radius - this.model.yEdge;
+            this.yVel *= -bounce;
         } // Top Edge
-        else if(this.yPos >= this.model.yEdge - this.radius && this.yVel > 0) {
-            this.applyDeltaV(2 * bounce * this.yVel, -Math.PI/2);
+        else if(this.yPos > this.model.yEdge - this.radius) {
+            this.yPos = this.model.yEdge - this.radius;
+            this.yVel *= -bounce;
         }
     }
 
     applyObjectCollision() {
         this.model.physicsObjects.forEach((other) => {
             if(this != other) {
-                if(this.distance(other) < this.radius + other.radius) {
-                    let impulse = 2 * other.mass * this.relativeVelocity(other)
-                                * this.model.bounceFactor / (this.mass + other.mass);
-                    this.applyDeltaV(impulse, other.heading(this));
+                let distance = this.distance(other);
+                if(distance < this.radius + other.radius) {
+                    let shift = this.radius + other.radius - distance;
+                    this.displace(shift, other.heading(this));
+                    let deltaV = 2 * other.mass * this.relativeVelocity(other)
+                                * Math.pow(this.model.bounceFactor, 2)
+                                / (this.mass + other.mass);
+                    this.applyImpulse(this.mass * deltaV, other.heading(this));
+                    other.applyImpulse(this.mass * deltaV, this.heading(other));
                 }
             }
         });
